@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yoda Karunia Kuntoro | Portofolio Teknik Sipil</title>
+    <meta name="description" content="Portofolio profesional Yoda Karunia Kuntoro, Sarjana Teknik Sipil dengan spesialisasi Struktur, Geoteknik, dan Seismologi. Menampilkan proyek, penelitian, dan keahlian.">
+    <meta name="keywords" content="Yoda Karunia Kuntoro, Teknik Sipil, Struktur, Geoteknik, Seismologi, Portofolio, ETABS, SAP2000, AutoCAD, Malang, Insinyur Sipil">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <!-- Visualization & Content Choices:
+    - Tagline (Beranda): Text display. Goal: Immediate impact. Interaction: Static. Justification: User requirement.
+    - About Me (Tentang Saya): Structured text (paragraphs, lists). Goal: In-depth introduction. Interaction: Static. Justification: Standard portfolio section.
+    - Skills (Keahlian): Categorized lists, potentially with icons (Unicode/Font Awesome). Goal: Quick assessment of capabilities. Interaction: Static. Justification: Clarity and scannability.
+    - Projects (Portofolio): Carousel (HTML/CSS/JS) of project cards (image, title, short desc). Modals (HTML/CSS/JS) for project details (role, challenge/solution, tech, images). Goal: Showcase practical application of skills. Interaction: Carousel navigation, modal open/close. Justification: User requirement for carousel, modals for detailed, focused view without page reload.
+    - Articles (Artikel): List of articles (title, summary, link). Goal: Demonstrate research and academic contribution. Interaction: Links to external/downloadable content. Justification: User requirement.
+    - Certifications (Sertifikasi): List of certifications. Goal: Validate skills. Interaction: Static. Justification: Standard portfolio section.
+    - Contact Form (Kontak): HTML form. Goal: Direct communication channel. Interaction: User input, client-side validation. Justification: User requirement.
+    - NO SVG graphics used. NO Mermaid JS used. All visuals are through HTML/CSS structure, Tailwind, Unicode characters, Font Awesome icons, and placeholder images for projects/certificates.
+    -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif; /* Using Inter as a default modern font, Tailwind uses system fonts by default */
+        }
+        .hero-bg {
+            background-color: #E0F2FE; /* Light Sky Blue */
+        }
+        .primary-color { color: #0EA5E9; } /* Sky-500 */
+        .primary-bg { background-color: #0EA5E9; }
+        .primary-bg-hover:hover { background-color: #0284C7; } /* Sky-600 */
+        .accent-color { color: #EF4444; } /* Red-500 */
+        .accent-bg { background-color: #EF4444; }
+        .accent-bg-hover:hover { background-color: #DC2626; } /* Red-600 */
+        .section-title {
+            font-size: 2.25rem; /* text-4xl */
+            font-weight: 700;
+            margin-bottom: 2rem; /* mb-8 */
+            text-align: center;
+            color: #1E3A8A; /* Indigo-800, a darker blue for titles */
+        }
+        .sticky-nav {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background-color: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .card {
+            background-color: white;
+            border-radius: 0.75rem; /* rounded-xl */
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+        }
+        /* Carousel Styles */
+        .carousel-container {
+            overflow: hidden;
+            position: relative;
+        }
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        .carousel-item {
+            min-width: 100%;
+            box-sizing: border-box;
+        }
+        @media (min-width: 768px) { /* md breakpoint */
+            .carousel-item {
+                min-width: 50%;
+            }
+        }
+        @media (min-width: 1024px) { /* lg breakpoint */
+            .carousel-item {
+                min-width: 33.3333%;
+            }
+        }
+        .carousel-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            border-radius: 0.25rem;
+            z-index: 10;
+        }
+        .carousel-button.prev { left: 10px; }
+        .carousel-button.next { right: 10px; }
+
+        /* Modal Styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.6);
+            padding-top: 60px;
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 700px;
+            border-radius: 0.5rem;
+            position: relative;
+        }
+        .close-modal {
+            color: #aaa;
+            position: absolute;
+            top: 10px;
+            right: 25px;
+            font-size: 35px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close-modal:hover,
+        .close-modal:focus {
+            color: black;
+            text-decoration: none;
+        }
+        /* Animation for sections */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <header id="header" class="sticky-nav">
+        <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <a href="#beranda" class="text-2xl font-bold text-sky-600">Yoda K. Kuntoro</a>
+            <div class="hidden md:flex space-x-4">
+                <a href="#beranda" class="text-gray-700 hover:text-sky-600 transition duration-300">Beranda</a>
+                <a href="#tentang-saya" class="text-gray-700 hover:text-sky-600 transition duration-300">Tentang Saya</a>
+                <a href="#keahlian" class="text-gray-700 hover:text-sky-600 transition duration-300">Keahlian</a>
+                <a href="#portofolio" class="text-gray-700 hover:text-sky-600 transition duration-300">Portofolio</a>
+                <a href="#artikel" class="text-gray-700 hover:text-sky-600 transition duration-300">Artikel</a>
+                <a href="#sertifikasi" class="text-gray-700 hover:text-sky-600 transition duration-300">Sertifikasi</a>
+                <a href="#kontak" class="text-gray-700 hover:text-sky-600 transition duration-300">Kontak</a>
+            </div>
+            <div class="md:hidden">
+                <button id="mobile-menu-button" class="text-gray-700 focus:outline-none">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden bg-white shadow-lg py-2">
+            <a href="#beranda" class="block px-6 py-2 text-gray-700 hover:bg-sky-100 transition duration-300">Beranda</a>
+            <a href="#tentang-saya" class="block px-6 py-2 text-gray-700 hover:bg-sky-100 transition duration-300">Tentang Saya</a>
+            <a href="#keahlian" class="block px-6 py-2 text-gray-700 hover:bg-sky-100 transition duration-300">Keahlian</a>
+            <a href="#portofolio" class="block px-6 py-2 text-gray-700 hover:bg-sky-100 transition duration-300">Portofolio</a>
+            <a href="#artikel" class="block px-6 py-2 text-gray-700 hover:bg-sky-100 transition duration-300">Artikel</a>
+            <a href="#sertifikasi" class="block px-6 py-2 text-gray-700 hover:bg-sky-100 transition duration-300">Sertifikasi</a>
+            <a href="#kontak" class="block px-6 py-2 text-gray-700 hover:bg-sky-100 transition duration-300">Kontak</a>
+        </div>
+    </header>
+
+    <main>
+        <section id="beranda" class="hero-bg min-h-screen flex items-center fade-in-section">
+            <div class="container mx-auto px-6 text-center">
+                <h1 class="text-5xl md:text-6xl font-bold text-sky-700 mb-6">Yoda Karunia Kuntoro</h1>
+                <p class="text-2xl md:text-3xl text-red-500 font-semibold mb-8">"Membangun Bangunan dengan Visi, Merancang untuk Masa Depan yang Berkelanjutan"</p>
+                <p class="text-lg text-gray-700 max-w-2xl mx-auto mb-10">
+                    Sarjana Teknik Sipil dengan spesialisasi dalam Rekayasa Struktur, Geoteknik, dan Seismologi. Berkomitmen untuk menghadirkan solusi inovatif dan tangguh dalam industri konstruksi.
+                </p>
+                <div class="space-x-4">
+                    <a href="#portofolio" class="bg-sky-500 hover:bg-sky-600 text-white font-bold py-3 px-8 rounded-lg text-lg transition duration-300 shadow-md hover:shadow-lg">Lihat Portofolio</a>
+                    <a href="#kontak" class="bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-8 rounded-lg text-lg transition duration-300 shadow-md hover:shadow-lg">Hubungi Saya</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="tentang-saya" class="py-20 bg-white fade-in-section">
+            <div class="container mx-auto px-6">
+                <h2 class="section-title">Tentang Saya</h2>
+                <div class="max-w-4xl mx-auto text-lg text-gray-700 space-y-6">
+                    <p class="text-center">
+                        <img src="https://placehold.co/150x150/E0F2FE/1E3A8A?text=Foto+Yoda" alt="Foto Yoda Karunia Kuntoro" class="rounded-full mx-auto mb-4 shadow-lg w-36 h-36 object-cover">
+                    </p>
+                    <p>
+                        Saya adalah <strong>Yoda Karunia Kuntoro</strong>, seorang Sarjana Teknik (S.T.) dalam bidang Teknik Sipil dari Universitas Katolik Widya Karya, Malang, lulus pada Januari 2025 dengan IPK 3.81. Saya memiliki minat dan pemahaman yang mendalam serta kuat dalam bidang rekayasa struktur, geoteknik, dan manajemen konstruksi. Pengalaman saya sebagai Asisten Peneliti di Program Studi Teknik Sipil UKWK (mulai Maret 2025) telah membekali saya dengan pemahaman komprehensif mengenai metodologi penelitian ilmiah, mulai dari studi literatur, pengumpulan dan analisis data, hingga penulisan artikel ilmiah untuk publikasi.
+                    </p>
+                    <p>
+                        Minat saya pada <strong>Rekayasa Struktur</strong> mencakup optimasi desain struktur berbasis kinerja, aplikasi material konstruksi berkelanjutan dan berkinerja tinggi, serta analisis interaksi tanah-struktur (SSI) dinamis untuk infrastruktur kritis. Dalam <strong>Rekayasa Geoteknik dan Seismologi</strong>, saya fokus pada mitigasi risiko likuifaksi, teknik perbaikan tanah inovatif, serta analisis bahaya seismik probabilistik (PSHA) dan deterministik (DSHA) beresolusi tinggi. Di bidang <strong>Manajemen Konstruksi</strong>, keahlian saya meliputi perencanaan dan penjadwalan proyek, penyusunan anggaran dan manajemen biaya, serta perhitungan volume pekerjaan (quantity takeoff).
+                    </p>
+                    <div class="grid md:grid-cols-2 gap-8 pt-6">
+                        <div>
+                            <h3 class="text-2xl font-semibold text-sky-700 mb-3">Pendidikan</h3>
+                            <div class="bg-sky-50 p-4 rounded-lg shadow">
+                                <p><strong>Sarjana Teknik (S.T.) Teknik Sipil</strong></p>
+                                <p>Universitas Katolik Widya Karya, Malang</p>
+                                <p>Periode: Agustus 2020 – Januari 2025</p>
+                                <p>IPK: 3.81 / 4.00</p>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-semibold text-sky-700 mb-3">Pengalaman Organisasi</h3>
+                            <ul class="space-y-3">
+                                <li class="bg-sky-50 p-4 rounded-lg shadow">
+                                    <strong>Ketua, Himpunan Mahasiswa Jurusan Teknik Sipil (HMJ-TS) UKWK</strong> (Agu 2022 – Jul 2023)
+                                    <p class="text-sm">Memimpin transformasi HMJ-TS, menjalin kolaborasi strategis, dan meningkatkan kualitas layanan serta keterlibatan mahasiswa.</p>
+                                </li>
+                                <li class="bg-sky-50 p-4 rounded-lg shadow">
+                                    <strong>Humas, Himpunan Mahasiswa Jurusan Teknik Sipil (HMJ-TS) UKWK</strong> (Agu 2021 – Jul 2022)
+                                    <p class="text-sm">Bertanggung jawab membangun citra positif HMJ-TS, mengelola saluran komunikasi, dan memperluas jaringan kerjasama.</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                     <p class="mt-6">
+                        Saya bersemangat untuk terus belajar, berkembang, dan berkontribusi secara signifikan dalam industri teknik sipil, menerapkan pengetahuan dan keterampilan saya untuk menciptakan infrastruktur yang aman, efisien, dan berkelanjutan.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="keahlian" class="py-20 bg-gray-100 fade-in-section">
+            <div class="container mx-auto px-6">
+                <h2 class="section-title">Keahlian</h2>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="card p-6">
+                        <h3 class="text-xl font-semibold text-sky-700 mb-3"><i class="fas fa-cogs mr-2"></i>Keahlian Teknis Inti</h3>
+                        <ul class="list-disc list-inside space-y-1 text-gray-700">
+                            <li>Analisis Struktur (FEA)</li>
+                            <li>Desain Struktur Beton Bertulang & Baja</li>
+                            <li>Rekayasa Kegempaan (PSHA, DSHA, SSI, Likuifaksi)</li>
+                            <li>Rekayasa Geoteknik (Perbaikan Tanah)</li>
+                            <li>Manajemen Konstruksi (Perencanaan, Anggaran, Volume)</li>
+                            <li>Preparasi & Fabrikasi Material Konstruksi</li>
+                            <li>Karakterisasi Material & Sistem Struktur</li>
+                        </ul>
+                    </div>
+                    <div class="card p-6">
+                        <h3 class="text-xl font-semibold text-sky-700 mb-3"><i class="fas fa-tools mr-2"></i>Perangkat Lunak</h3>
+                        <ul class="list-disc list-inside space-y-1 text-gray-700">
+                            <li>ETABS, SAP2000, CSI SAFE</li>
+                            <li>AutoCAD</li>
+                            <li>SPSS</li>
+                            <li>Microsoft Office (Word, Excel Lanjut, PowerPoint)</li>
+                            <li>Mendeley</li>
+                        </ul>
+                    </div>
+                    <div class="card p-6">
+                        <h3 class="text-xl font-semibold text-sky-700 mb-3"><i class="fas fa-microscope mr-2"></i>Metodologi & Proses Riset</h3>
+                        <ul class="list-disc list-inside space-y-1 text-gray-700">
+                            <li>Penelitian Ilmiah (Kuantitatif, Kualitatif, Campuran)</li>
+                            <li>Studi Literatur Komprehensif</li>
+                            <li>Analisis Data Eksperimental</li>
+                            <li>Penulisan Artikel Ilmiah Standar Jurnal</li>
+                            <li>Manajemen Laboratorium</li>
+                        </ul>
+                    </div>
+                    <div class="card p-6 md:col-span-2 lg:col-span-1 lg:col-start-2">
+                        <h3 class="text-xl font-semibold text-sky-700 mb-3"><i class="fas fa-language mr-2"></i>Bahasa</h3>
+                        <ul class="list-disc list-inside space-y-1 text-gray-700">
+                            <li>Indonesia (Mahir, Lisan & Tulisan)</li>
+                            <li>Inggris (Mahir, Lisan & Tulisan)</li>
+                            <li>Jawa (Timur) (Mahir, Lisan)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="portofolio" class="py-20 bg-white fade-in-section">
+            <div class="container mx-auto px-6">
+                <h2 class="section-title">Portofolio Proyek</h2>
+                <p class="text-center text-lg text-gray-600 mb-12 max-w-2xl mx-auto">Berikut adalah beberapa proyek riset dan studi kasus yang telah saya kerjakan, menunjukkan aplikasi praktis dari keahlian dan pengetahuan saya.</p>
+                
+                <div class="carousel-container">
+                    <div class="carousel-track">
+                        </div>
+                    <button class="carousel-button prev"><i class="fas fa-chevron-left"></i></button>
+                    <button class="carousel-button next"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+        </section>
+
+        <div id="projectModal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal" onclick="closeModal()">&times;</span>
+                <h3 id="modalTitle" class="text-2xl font-bold text-sky-700 mb-4"></h3>
+                <img id="modalImage" src="https://placehold.co/600x400/E0F2FE/1E3A8A?text=Gambar+Proyek" alt="Gambar Proyek" class="w-full h-64 object-cover rounded-lg mb-4">
+                <p class="text-sm text-gray-500 mb-1"><strong>Peran:</strong> <span id="modalRole"></span></p>
+                <p class="text-sm text-gray-500 mb-1"><strong>Teknologi:</strong> <span id="modalTech"></span></p>
+                <div class="mt-2 text-gray-700 space-y-2">
+                    <p><strong>Deskripsi:</strong> <span id="modalDescription"></span></p>
+                    <p><strong>Tantangan Utama:</strong> <span id="modalChallenge"></span></p>
+                    <p><strong>Solusi & Implementasi:</strong> <span id="modalSolution"></span></p>
+                </div>
+            </div>
+        </div>
+
+
+        <section id="artikel" class="py-20 bg-gray-100 fade-in-section">
+            <div class="container mx-auto px-6">
+                <h2 class="section-title">Artikel Penelitian</h2>
+                <p class="text-center text-lg text-gray-600 mb-12 max-w-2xl mx-auto">Kontribusi saya dalam dunia riset dan pengembangan ilmu pengetahuan di bidang teknik sipil.</p>
+                <div id="articles-list" class="space-y-8">
+                    </div>
+            </div>
+        </section>
+
+        <section id="sertifikasi" class="py-20 bg-white fade-in-section">
+            <div class="container mx-auto px-6">
+                <h2 class="section-title">Sertifikasi & Penghargaan</h2>
+                <div class="max-w-3xl mx-auto">
+                    <div class="card p-6 mb-8">
+                        <h3 class="text-xl font-semibold text-sky-700 mb-2"><i class="fas fa-award mr-2"></i>Penghargaan</h3>
+                        <p><strong>Top 5% Applicants - AI4IMPACT Career Scholarship 2.0 2023</strong> (AI4IMPACT)</p>
+                    </div>
+                    <div class="card p-6">
+                        <h3 class="text-xl font-semibold text-sky-700 mb-3"><i class="fas fa-certificate mr-2"></i>Sertifikasi Kursus Profesional</h3>
+                        <ul id="certifications-list" class="list-disc list-inside space-y-2 text-gray-700">
+                            </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="kontak" class="py-20 hero-bg fade-in-section">
+            <div class="container mx-auto px-6">
+                <h2 class="section-title">Hubungi Saya</h2>
+                <p class="text-center text-lg text-gray-700 mb-12 max-w-xl mx-auto">Saya terbuka untuk diskusi mengenai peluang karir, proyek kolaborasi, atau pertanyaan terkait keahlian saya.</p>
+                <div class="max-w-2xl mx-auto bg-white p-8 rounded-xl shadow-2xl">
+                    <form id="contactForm" class="space-y-6">
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-gray-700">Nama Lengkap</label>
+                            <input type="text" name="name" id="name" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm">
+                        </div>
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700">Alamat Email</label>
+                            <input type="email" name="email" id="email" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm">
+                        </div>
+                        <div>
+                            <label for="subject" class="block text-sm font-medium text-gray-700">Subjek</label>
+                            <input type="text" name="subject" id="subject" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm">
+                        </div>
+                        <div>
+                            <label for="message" class="block text-sm font-medium text-gray-700">Pesan</label>
+                            <textarea name="message" id="message" rows="4" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm"></textarea>
+                        </div>
+                        <div>
+                            <button type="submit" class="w-full primary-bg primary-bg-hover text-white font-bold py-3 px-4 rounded-md transition duration-300 text-lg shadow-md hover:shadow-lg">
+                                Kirim Pesan
+                            </button>
+                        </div>
+                    </form>
+                    <div id="form-message" class="mt-4 text-center"></div>
+                    <div class="mt-8 text-center">
+                        <p class="text-gray-700 mb-2">Atau hubungi saya langsung melalui:</p>
+                        <div class="flex justify-center space-x-6">
+                            <a href="https://wa.me/6282264123437" target="_blank" class="text-green-500 hover:text-green-600 transition duration-300 text-2xl">
+                                <i class="fab fa-whatsapp"></i> <span class="sr-only">WhatsApp</span>
+                            </a>
+                            <a href="mailto:yodakarunia1@gmail.com" class="text-red-500 hover:text-red-600 transition duration-300 text-2xl">
+                                <i class="fas fa-envelope"></i> <span class="sr-only">Email</span>
+                            </a>
+                            <a href="https://www.linkedin.com/in/yodakarunia/" target="_blank" class="text-sky-600 hover:text-sky-700 transition duration-300 text-2xl">
+                                <i class="fab fa-linkedin"></i> <span class="sr-only">LinkedIn</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-gray-300 py-8 text-center">
+        <div class="container mx-auto px-6">
+            <p>&copy; <span id="currentYear"></span> Yoda Karunia Kuntoro. Semua hak dilindungi.</p>
+            <p class="text-sm mt-1">Dirancang dengan <i class="fas fa-heart text-red-500"></i> di Malang, Indonesia.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+         document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                mobileMenu.classList.add('hidden'); // Close mobile menu on item click
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+
+        // Data Proyek
+        const projects = [
+            {
+                id: 'riset-getar-alami',
+                title: 'Analisis Parametrik Pengaruh Variasi Mutu Beton terhadap Karakteristik Getar Alami Bangunan Gedung',
+                image: 'https://placehold.co/600x300/A7F3D0/1E40AF?text=Riset+Getar+Alami',
+                role: 'Peneliti Utama',
+                tech: 'ETABS, MS Excel',
+                description: 'Menyelidiki pengaruh variasi mutu kuat tekan beton ($f_c\'$: 20-40 MPa) terhadap karakteristik getaran alami (periode, frekuensi, mode getar) pada model bangunan beton bertulang 3, 6, dan 12 lantai.',
+                challenge: 'Memodelkan dan menganalisis berbagai skenario variasi mutu beton dan ketinggian gedung secara akurat untuk mendapatkan pola hubungan yang signifikan.',
+                solution: 'Penggunaan perangkat lunak ETABS untuk pemodelan parametrik dan analisis modal yang komprehensif, serta analisis statistik hasil simulasi menggunakan MS Excel.'
+            },
+            {
+                id: 'riset-respons-seismik',
+                title: 'Analisis Parametrik Pengaruh Mutu Beton terhadap Respons Simpangan Seismik Bangunan Berdasarkan SNI 1726:2019',
+                image: 'https://placehold.co/600x300/BAE6FD/1E3A8A?text=Riset+Respons+Seismik',
+                role: 'Peneliti Utama',
+                tech: 'ETABS, SNI 1726:2019, MS Excel',
+                description: 'Menganalisis pengaruh variasi mutu kuat tekan beton ($f_c\'$: 20-40 MPa) terhadap respons deformasi seismik (simpangan lateral maksimum, simpangan antar lantai/IDR) pada bangunan beton bertulang 3, 6, dan 12 lantai sesuai standar SNI 1726:2019. Hasil menunjukkan reduksi simpangan atap 26.2%-29.3% untuk peningkatan $f_c\'$ dari 20 ke 40 MPa.',
+                challenge: 'Menerapkan standar SNI 1726:2019 secara tepat dalam analisis respons seismik untuk berbagai konfigurasi bangunan dan mutu material.',
+                solution: 'Melakukan analisis riwayat waktu atau spektrum respons menggunakan ETABS dengan input data gempa sesuai SNI, dilanjutkan dengan evaluasi kinerja struktur berdasarkan kriteria batas simpangan.'
+            },
+            {
+                id: 'riset-froude-number',
+                title: 'Analysis of Froude Number and Hydraulic Jump Type in the Flow Through a Sluice Gate in a Secondary Channel',
+                image: 'https://placehold.co/600x300/DDD6FE/4C1D95?text=Riset+Froude+Number',
+                role: 'Peneliti (Anggota Tim)',
+                tech: 'Metode Analitis, MS Excel',
+                description: 'Menganalisis bilangan Froude dan tipe loncatan hidrolik pada aliran yang melalui pintu air (sluice gate) pada saluran sekunder untuk memahami potensi gerusan dasar saluran dan efisiensi aliran.',
+                challenge: 'Menganalisis data aliran pada saluran sekunder yang kompleks dan mengklasifikasikan fenomena hidrolik yang terjadi secara akurat.',
+                solution: 'Aplikasi teori hidrolika klasik dan analisis data observasi/eksperimen lapangan untuk menentukan parameter aliran dan jenis loncatan hidrolik.'
+            },
+            {
+                id: 'desain-rs-10lt',
+                title: 'Studi Kasus: Desain Ulang Struktur Rumah Sakit 10 Lantai di Kota Malang',
+                image: 'https://placehold.co/600x300/FECACA/7F1D1D?text=Desain+RS+10+Lantai',
+                role: 'Desainer Struktur (Proyek Fiktif)',
+                tech: 'ETABS, SAP2000, AutoCAD (implied), SNI terkait',
+                description: 'Portofolio fiktif yang melibatkan desain ulang struktur beton bertulang untuk bangunan rumah sakit 10 lantai, dengan mempertimbangkan data kegempaan spesifik untuk Kota Malang.',
+                challenge: 'Mendesain struktur tahan gempa untuk bangunan dengan fungsi kritis (rumah sakit) sesuai standar desain terbaru dan memastikan keamanan serta layanannya.',
+                solution: 'Pemodelan struktur 3D dan analisis komprehensif menggunakan ETABS/SAP2000 dengan data gempa Malang, dilanjutkan dengan desain elemen-elemen struktur beton bertulang sesuai SNI.'
+            },
+            {
+                id: 'desain-ponpes-6lt',
+                title: 'Studi Kasus: Desain Ulang Struktur Pondok Pesantren 6 Lantai di Kota Malang',
+                image: 'https://placehold.co/600x300/FED7AA/7C2D12?text=Desain+Ponpes+6+Lantai',
+                role: 'Desainer Struktur (Proyek Fiktif)',
+                tech: 'ETABS, SAP2000, AutoCAD (implied), SNI terkait',
+                description: 'Portofolio fiktif untuk desain ulang struktur beton bertulang pondok pesantren 6 lantai, dengan memperhatikan aspek kegempaan di Kota Malang.',
+                challenge: 'Mengadaptasi desain struktur untuk bangunan dengan fungsi spesifik (pondok pesantren) yang memiliki potensi okupansi tinggi dan kebutuhan ruang yang unik.',
+                solution: 'Pemodelan dan analisis struktur menggunakan ETABS/SAP2000, memastikan semua elemen struktur memenuhi persyaratan kekuatan dan kekakuan sesuai standar.'
+            },
+            {
+                id: 'rab-ruko-2lt',
+                title: 'Studi Kasus: Perhitungan RAB dan Kurva-S Proyek Ruko 2 Lantai',
+                image: 'https://placehold.co/600x300/BBF7D0/14532D?text=RAB+Ruko+2+Lantai',
+                role: 'Quantity Surveyor/Estimator (Proyek Fiktif)',
+                tech: 'MS Excel',
+                description: 'Portofolio fiktif yang mencakup perhitungan Rencana Anggaran Biaya (RAB) dan penyusunan Kurva-S untuk proyek pembangunan ruko 2 lantai di Kota Malang.',
+                challenge: 'Menghasilkan estimasi biaya dan jadwal pelaksanaan proyek yang akurat dan realistis berdasarkan data desain yang tersedia.',
+                solution: 'Melakukan perhitungan volume pekerjaan secara detail, analisis harga satuan material dan upah kerja, serta menyusun jadwal proyek dalam bentuk Kurva-S untuk monitoring progres.'
+            },
+            {
+                id: 'rab-rehab-smks',
+                title: 'Studi Kasus: Penyusunan RAB Rehabilitasi Ruang Kelas SMKS',
+                image: 'https://placehold.co/600x300/BFDBFE/1E3A8A?text=RAB+Rehab+SMKS',
+                role: 'Estimator (Proyek Fiktif)',
+                tech: 'MS Excel',
+                description: 'Portofolio fiktif untuk penyusunan Rencana Anggaran Biaya (RAB) rehabilitasi ruang kelas dengan tingkat kerusakan minimum, termasuk perabotan, di SMKS 1 Terpadu Babussalam, Kabupaten Aceh Utara.',
+                challenge: 'Melakukan estimasi biaya rehabilitasi yang efisien dengan mempertimbangkan tingkat kerusakan minimum dan kebutuhan perabotan.',
+                solution: 'Melakukan analisis detail terhadap tingkat kerusakan, perhitungan volume pekerjaan perbaikan, estimasi biaya material dan tenaga kerja, serta biaya pengadaan perabotan.'
+            }
+        ];
+
+        const carouselTrack = document.querySelector('.carousel-track');
+        projects.forEach(project => {
+            const projectCard = `
+                <div class="carousel-item p-4">
+                    <div class="card overflow-hidden">
+                        <img src="${project.image}" alt="${project.title}" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-lg font-semibold text-sky-700 mb-2 truncate" title="${project.title}">${project.title}</h3>
+                            <p class="text-sm text-gray-600 mb-3 truncate">${project.role}</p>
+                            <button onclick="openModal('${project.id}')" class="text-sm primary-color hover:underline">Lihat Detail <i class="fas fa-arrow-right ml-1"></i></button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            carouselTrack.innerHTML += projectCard;
+        });
+        
+        // Carousel Logic
+        const track = document.querySelector('.carousel-track');
+        const items = Array.from(track.children);
+        const nextButton = document.querySelector('.carousel-button.next');
+        const prevButton = document.querySelector('.carousel-button.prev');
+        let itemWidth = items[0].getBoundingClientRect().width;
+        let currentIndex = 0;
+
+        function updateCarouselWidth() {
+            itemWidth = items[0].getBoundingClientRect().width;
+             track.style.transform = 'translateX(' + (-itemWidth * currentIndex) + 'px)';
+        }
+        
+        window.addEventListener('resize', updateCarouselWidth);
+
+        nextButton.addEventListener('click', () => {
+            if (currentIndex < items.length - (window.innerWidth < 768 ? 1 : window.innerWidth < 1024 ? 2 : 3) ) {
+                 currentIndex++;
+            } else {
+                currentIndex = 0; // Loop to start
+            }
+            track.style.transform = 'translateX(' + (-itemWidth * currentIndex) + 'px)';
+        });
+
+        prevButton.addEventListener('click', () => {
+            if (currentIndex > 0) {
+                currentIndex--;
+            } else {
+                 currentIndex = items.length - (window.innerWidth < 768 ? 1 : window.innerWidth < 1024 ? 2 : 3); // Loop to end
+                 if (currentIndex < 0) currentIndex = 0;
+            }
+            track.style.transform = 'translateX(' + (-itemWidth * currentIndex) + 'px)';
+        });
+        
+        updateCarouselWidth(); // Initial call
+
+        // Modal Logic
+        const modal = document.getElementById('projectModal');
+        function openModal(projectId) {
+            const project = projects.find(p => p.id === projectId);
+            if (project) {
+                document.getElementById('modalTitle').textContent = project.title;
+                document.getElementById('modalImage').src = project.image;
+                document.getElementById('modalImage').alt = project.title;
+                document.getElementById('modalRole').textContent = project.role;
+                document.getElementById('modalTech').textContent = project.tech;
+                document.getElementById('modalDescription').innerHTML = project.description; // Use innerHTML if desc contains HTML
+                document.getElementById('modalChallenge').innerHTML = project.challenge;
+                document.getElementById('modalSolution').innerHTML = project.solution;
+                modal.style.display = "block";
+            }
+        }
+        function closeModal() {
+            modal.style.display = "none";
+        }
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+
+        // Data Artikel
+        const articles = [
+            {
+                title: "Analysis of Froude Number and Hydraulic Jump Type in the Flow Through a Sluice Gate in a Secondary Channel",
+                authors: "Yoda Karunia Kuntoro, Sunik, Anna Catharina Sri Purna Suswati",
+                journal: "Jurnal Teknik Sipil, Universitas Katolik Widya Karya, Vol. 2, No. 2, Desember 2024, e-ISSN: 3021-8705, p-ISSN: 3021-8713, Hal 43-68",
+                status: "Terbit",
+                summary: "Penelitian ini menganalisis secara komprehensif bilangan Froude dan tipe loncatan hidrolik yang terjadi pada aliran melalui pintu air (sluice gate) di saluran sekunder. Fokus utama adalah untuk memahami karakteristik aliran superkritis dan transisinya menjadi aliran subkritis, serta mengidentifikasi potensi gerusan (scouring) pada dasar saluran akibat energi yang dilepaskan selama loncatan hidrolik. Hasil penelitian memberikan wawasan penting untuk desain dan pemeliharaan struktur hidrolik yang lebih efisien dan aman.",
+                link: "https://ejournal.widyakarya.ac.id/index.php/Sipil/article/view/124"
+            },
+            {
+                title: "Analisis Parametrik Pengaruh Variasi Mutu Beton terhadap Karakteristik Getar Alami Bangunan Gedung Beton Bertulang Berbagai Tingkat Ketinggian",
+                authors: "Yoda Karunia Kuntoro, Sunik, Sendy Fransiscus Tantono",
+                journal: "Diserahkan ke Jurnal (Dalam Proses Review)",
+                status: "Under Review",
+                summary: "Artikel ini menyajikan analisis parametrik mengenai bagaimana variasi mutu kuat tekan beton ($f_c'$) mempengaruhi karakteristik getaran alami (periode, frekuensi, dan mode getar) dari bangunan gedung beton bertulang dengan berbagai tingkat ketinggian (3, 6, dan 12 lantai). Studi ini menggunakan pemodelan numerik untuk mengeksplorasi sensitivitas respons dinamik struktur terhadap perubahan properti material beton, memberikan panduan penting untuk desain struktur yang optimal dan aman terhadap beban dinamik.",
+                link: "#"
+            },
+            {
+                title: "Analisis Parametrik Pengaruh Mutu Beton terhadap Respons Simpangan Seismik Bangunan Beton Bertulang Bertingkat Rendah, Menengah, dan Tinggi Berdasarkan SNI 1726:2019",
+                authors: "Yoda Karunia Kuntoro, Sunik, Sendy Fransiscus Tantono",
+                journal: "Diserahkan ke Jurnal (Dalam Proses Review)",
+                status: "Under Review",
+                summary: "Penelitian ini bertujuan untuk menganalisis secara parametrik pengaruh variasi mutu kuat tekan beton ($f_c'$) terhadap respons simpangan seismik pada bangunan beton bertulang bertingkat rendah, menengah, dan tinggi. Analisis dilakukan berdasarkan ketentuan Standar Nasional Indonesia (SNI) 1726:2019 tentang Tata Cara Perencanaan Ketahanan Gempa untuk Struktur Bangunan Gedung dan Non Gedung. Hasilnya diharapkan dapat memberikan pemahaman yang lebih baik tentang bagaimana mutu beton mempengaruhi kinerja seismik struktur dan kontribusinya terhadap keselamatan bangunan.",
+                link: "#"
+            }
+        ];
+
+        const articlesList = document.getElementById('articles-list');
+        articles.forEach(article => {
+            const articleCard = `
+                <div class="card p-6">
+                    <h3 class="text-xl font-semibold text-sky-700 mb-2">${article.title}</h3>
+                    <p class="text-sm text-gray-500 mb-1"><strong>Penulis:</strong> ${article.authors}</p>
+                    <p class="text-sm text-gray-500 mb-1"><strong>Jurnal/Status:</strong> ${article.journal} (${article.status})</p>
+                    <p class="text-gray-700 my-3 text-justify">${article.summary}</p>
+                    ${article.link !== "#" ? `<a href="${article.link}" target="_blank" class="text-sm primary-color hover:underline">Baca Selengkapnya <i class="fas fa-external-link-alt ml-1"></i></a>` : '<p class="text-sm text-gray-400">Tautan belum tersedia</p>'}
+                </div>
+            `;
+            articlesList.innerHTML += articleCard;
+        });
+
+        // Data Sertifikasi
+        const certifications = [
+            "Perencanaan Struktur Bangunan Baja (Creative Station, 2023)",
+            "Design of Concrete Structures for Irregular Buildings with ETABS (Creative Station, 2023)",
+            "Concrete and Steel Structure Design of Mid-Rise Building with ETABS (Creative Station, 2023)",
+            "ETABS & SAFE Complete Building Design Course + Detailing (Udemy, Des 2022)",
+            "STRUCTURAL ANALYSIS TRAINING \"CSI ETABS\" (Tehno Project, Des 2022)",
+            "STRUCTURAL ANALYSIS TRAINING \"CSI SAP2000\" (Tehno Project, Des 2022)",
+            "Design of Steel Truss Bridge Structure Using SAP2000 and SNI 1725-2016 (Creative Station, 2023)",
+            "Steel Structure Design for Warehouse Using SAP2000 (Creative Station, 2023)",
+            "Csi ETABS in the Structural Analysis of 15 Stories + Basement (Udemy, Des 2024)"
+        ];
+        const certificationsList = document.getElementById('certifications-list');
+        certifications.forEach(cert => {
+            const listItem = `<li>${cert}</li>`;
+            certificationsList.innerHTML += listItem;
+        });
+
+        // Contact Form Handling
+        const contactForm = document.getElementById('contactForm');
+        const formMessage = document.getElementById('form-message');
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Basic client-side validation is handled by 'required' attribute.
+            // For a real submission, you would use Fetch API to send data to a backend or service.
+            // Example:
+            // const formData = new FormData(contactForm);
+            // fetch('YOUR_BACKEND_ENDPOINT', { method: 'POST', body: formData })
+            //   .then(response => response.json())
+            //   .then(data => {
+            //     formMessage.textContent = 'Pesan Anda telah berhasil terkirim!';
+            //     formMessage.className = 'mt-4 text-center text-green-600';
+            //     contactForm.reset();
+            //   })
+            //   .catch(error => {
+            //     formMessage.textContent = 'Terjadi kesalahan saat mengirim pesan. Silakan coba lagi.';
+            //     formMessage.className = 'mt-4 text-center text-red-600';
+            //   });
+
+            formMessage.textContent = 'Formulir ini adalah contoh. Untuk fungsionalitas penuh, diperlukan backend.';
+            formMessage.className = 'mt-4 text-center text-orange-600 p-3 bg-orange-100 rounded-md';
+            // contactForm.reset(); // Uncomment if you want to clear form after fake submission
+        });
+
+        // Scroll Animations
+        const sections = document.querySelectorAll('.fade-in-section');
+        const observerOptions = {
+            root: null, // relative to document viewport
+            rootMargin: '0px',
+            threshold: 0.1 // 10% of item is visible
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    // observer.unobserve(entry.target); // Optional: stop observing after it's visible
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+
+    </script>
+</body>
+</html>
